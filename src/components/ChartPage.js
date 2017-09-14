@@ -1,13 +1,24 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
 
-class CartPage extends Component {
+import Chart from './Chart';
+
+class ChartPage extends Component {
   render() {
     return (
       <div>
-        CartPage
+        ChartPage
+        <br/>
+        <Chart/>
       </div>
     );
   }
 }
 
-export default CartPage;
+function mapStateToProps(state){
+  return {
+    test: state.test
+  }
+}
+
+export default connect(mapStateToProps)(ChartPage);
