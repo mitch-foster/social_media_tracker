@@ -9,9 +9,11 @@ class AboutPage extends Component {
       <div>
         AboutPage
         <br/>
-        <button onClick={this.props.logInUser}>
-          click me
-        </button>
+        <a href='http://localhost:3333/auth/twitter'>
+          <button>
+            Enter
+          </button>
+        </a>
       </div>
     );
   }

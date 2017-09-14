@@ -8,8 +8,6 @@ class Chart extends Component {
       <div>
         <Line
           data={this.props.data}
-          width={{}}
-          height={{}}
           options={{
             maintainAspectRatio: true,
             title: {
