@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux'
 
-import {logInUser} from './../ducks/reducer';
 
 class AboutPage extends Component {
   render() {
     return (
       <div>
-        AboutPage
+        <h3>
+         
+        </h3>
+        <h3>
+          Welcome! Log in to see a visual representaion of your Twitter stats.
+        </h3>
         <br/>
         <a href='http://localhost:3333/auth/twitter'>
-          <button>
+          <button className='button'>
             Enter
           </button>
         </a>
@@ -19,4 +22,4 @@ class AboutPage extends Component {
   }
 }
 
-export default connect(null, {logInUser})(AboutPage);
+export default AboutPage;

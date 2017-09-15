@@ -10,8 +10,8 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Social Media Tracker</h2>
+          <img src={'http://jjumpp.com/wp-content/uploads/2017/05/Color-White.png'} className="App-logo" alt="logo" />
+          <h2>Twitter Stats Tracker</h2>
         </div>
         {Router}
       </div>

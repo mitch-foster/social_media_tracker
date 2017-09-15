@@ -1,46 +1,35 @@
-const LOG_IN_USER = 'LOG_IN_USER'
+import getTwitterDataService from './service';
+
+const GET_TWITTER_DATA = 'GET_TWITTER_DATA'
 
 const initialState = {
   test: 'test',
-  user: null,
-  password: null,
-  chartData: {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-    datasets: [
-      {
-        label: 'Followers',
-        data:[
-          10,
-          40,
-          55,
-          90,
-          200,
-          275
-        ],
-        backgroundColor:[
-          '#1B95E0',
-        ]
-      }
-      
-
-    ]
-    },
+  followers: 0,
+  friends: 0,
+  statuses: 0,
+  showChart: false
 }
 
 export default function reducer(state = initialState, action){
   switch (action.type) {
-    case LOG_IN_USER:
-      return state;
+    case GET_TWITTER_DATA + '_PENDING':
+      return Object.assign({}, state, {showChart: false})
+    case GET_TWITTER_DATA + '_FULFILLED':
+      return Object.assign({}, state, {
+        followers: action.payload.followers_count,
+        friends: action.payload.friends_count,
+        statuses: action.payload.statuses_count,
+        showChart: true
+      });
     default: 
     return state;
   } 
 }
 
-export function logInUser(user){
-  console.log('action creator hit')
+export function getTwitterData(user){
   return {
-    type: LOG_IN_USER,
-    payload: user
+    type: GET_TWITTER_DATA,
+    payload: getTwitterDataService(user)
   }
 }
 

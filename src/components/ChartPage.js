@@ -3,41 +3,67 @@ import {connect} from 'react-redux';
 import axios from 'axios';
 
 import Chart from './Chart';
+import {getTwitterData} from './../ducks/reducer';
 
 class ChartPage extends Component {
   constructor(props){
     super(props);
     this.state = {
         user: [],
-        loading: true
+        loggedIn: false,
     }
+    this.showStats = this.showStats.bind(this);
   }
   componentDidMount(){
     axios.get('http://localhost:3333/api/user')
     .then((response)=>{
-      console.log('test'); 
-      this.setState({user: response.data, loading: false})
+      this.setState({user: response.data, loggedIn: true})
     })
     .catch(err=>{console.log('error', err)})
   }
 
+  showStats(){
+    this.props.getTwitterData(this.state.user)
+  }
+
   render() {
-    if(this.state.loading === true){
+    if(!this.state.loggedIn){
       return (
         <div>
-           <a href='http://localhost:3333/auth/twitter'>
-          <button>
-            Log in to Twitter
+          <br/>
+          <a href='http://localhost:3333/auth/twitter'>
+            <button className='button'>
+              Log in to Twitter
+            </button>
+          </a>
+        </div>
+      );
+    }
+    if(!this.props.showChart){
+      return (
+        <div>
+          <br/>
+          <h2>Welcome {this.state.user}!</h2>
+          <br/>
+          <br/>
+          <button className='button' onClick={this.showStats}>
+            Show me my Twitter Stats
           </button>
-        </a>
         </div>
       );
     }
     return (
       <div>
-        Welcome {this.state.user}!
         <br/>
-        <Chart/>
+        <h2>Welcome {this.state.user}!</h2>
+        {this.props.showChart ? 
+          <Chart  followers={this.props.followers}
+                friends={this.props.friends}
+                statuses={this.props.statuses}
+        />
+        :
+        null
+        }
       </div>
     );
   }
@@ -45,8 +71,12 @@ class ChartPage extends Component {
 
 function mapStateToProps(state){
   return {
-    test: state.test
+    test: state.test,
+    followers: state.followers,
+    friends: state.friends,
+    statuses: state.statuses,
+    showChart: state.showChart
   }
 }
 
-export default connect(mapStateToProps)(ChartPage);
+export default connect(mapStateToProps, {getTwitterData})(ChartPage);

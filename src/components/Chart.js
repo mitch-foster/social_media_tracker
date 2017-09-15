@@ -1,18 +1,50 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
-import {Line} from 'react-chartjs-2';
+import {Bar} from 'react-chartjs-2';
 
 class Chart extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      chartData: {
+        labels: ['Follower Count', 'Friends Count', 'Statuses Count'],
+        datasets: [
+          {
+            data:[
+              this.props.followers,
+              this.props.friends,
+              this.props.statuses
+            ],
+            backgroundColor:[
+              '#227FF2',
+              '#00A8FF',
+              '#00D2FF'
+            ]
+          }
+        ]
+      },
+    }
+  }
   render() {
     return (
       <div>
-        <Line
-          data={this.props.data}
+        <Bar
+          data={this.state.chartData}
+          height={90}
           options={{
+            legend: {
+              display: false
+            },
+            scales: {
+              yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                  }
+              }]
+            },
             maintainAspectRatio: true,
             title: {
               display: true,
-              text: 'Twitter Followers by Month',
+              text: 'Twitter Followers, Friends, and Statuses',
               fontSize: 25,
             }
             
@@ -23,10 +55,4 @@ class Chart extends Component {
   }
 }
 
-function mapStateToProps(state){
-  return {
-    data: state.chartData
-  }
-}
-
-export default connect(mapStateToProps)(Chart);
+export default Chart
